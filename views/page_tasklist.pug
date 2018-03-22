@@ -1,0 +1,15 @@
+extends page_layout
+
+block content
+  h1 #{title}
+  ul.list-group
+      each task, i in tasks
+        ol.list-group-item
+          li
+            a(href="/view/task/"+task._id)= task.tasktitle + ' - ' + task.assignedTo
+  br
+  p Content ideas for this page:
+  ol
+    li Edit, delete, complete buttons on task rows based on User Roles
+    li Present different views for different Roles
+    

@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    title Stark Family To Do App
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/style.css')
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='/js/main.js')
+    body.mybgcolor
+      .container
+        nav.navbar.navbar-expand-md.navbar-dark.mynavbar-color
+          //- a.navbar-brand(href='/') Knowledgebase
+          button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+          #navbarsExampleDefault.collapse.navbar-collapse
+            ul.navbar-nav.mr-auto
+              li.nav-item
+                a.nav-link(href='/') Home Page
+              li.nav-item
+                a.nav-link(href='/view/tasks') Task List
+              li.nav-item
+                a.nav-link(href='/add/task') Add New Task
+          //- ul.navbar-nav.ml-auto
+          //-   if user
+          //-     li
+          //-       a(href='/users/logout') Logout
+          //-   else
+          //-     li.nav-item
+          //-       a.nav-link(href='/users/register') Register User
+          //-     li.nav-item
+          //-       a.nav-link(href='/users/login') User Login
+      //- br
+      .container
+        block content
+        hr
+        footer.myfooter
+          p.copyright Copyright ©2018 Ted Stark
+      //-   != messages('message', locals)
+      //-   if errors
+      //-     each error, i in errors
+      //-       div(class="alert alert-danger") #{error.msg}  
+      //- block content
+      //- hr
+      //- footer
+      //-   div
+          //- a.btn.btn-info(href='/', class='tempnavbaritems') Home Page
+          //- a.btn.btn-info(href='/view/tasks', class='tempnavbaritems') Task List
+          //- a.btn.btn-info(href='/add/task', class='tempnavbaritems') Add Tasks
+          //- a.btn.btn-info(href='/edit', class='tempnavbaritems') Edit Tasks
+          //- p Copyright ©2018 Ted Stark

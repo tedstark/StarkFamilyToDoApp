@@ -1,0 +1,22 @@
+extends page_layout
+
+block content
+  h1 #{title}
+  form(method='POST',action='/edit/task/'+task._id)
+    #form-group
+      label Task Name:
+      input.form-control(name='input_Task', type='text', value=task.tasktitle)
+    br
+    #form-group
+        label Assigned To:
+        input.form-control(name='input_Assigned', type='text', value=task.assignedTo)
+    br
+    #form-group
+        label Due Date:
+        input.form-control(name='input_DueDate', type='date') 
+    br
+    #form-group
+        label Task Description:
+        textarea.form-control(name='input_Body')= task.taskbody
+    br
+    input.btn.btn-primary(type='submit',value='Submit')   
