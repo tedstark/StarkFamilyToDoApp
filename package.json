@@ -14,15 +14,18 @@
     "bootstrap": "^4.0.0",
     "connect-flash": "^0.1.1",
     "console-stamp": "^0.2.6",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
     "express-validator": "^5.0.3",
     "jquery": "^3.3.1",
     "mongoose": "^5.0.11",
+    "npm": "^5.7.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "popper": "^1.0.1",
+    "process-env": "^1.1.0",
     "pug": "^2.0.2"
   }
 }

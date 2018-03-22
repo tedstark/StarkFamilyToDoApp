@@ -27,3 +27,6 @@
 .mybgcolor{
   background-color: #FFFFF0;
 }
+a {
+  display: block;
+}

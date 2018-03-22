@@ -3,13 +3,15 @@ extends page_layout
 block content
   h1 #{title}
   ul.list-group
-      each task, i in tasks
-        ol.list-group-item
+      ol.list-group-item
+        each task, i in tasks
           li
-            a(href="/view/task/"+task._id)= task.tasktitle + ' - ' + task.assignedTo
+            a(href="/view/task/"+task._id)= task.tasktitle + ' - for ' + task.assignedTo
   br
   p Content ideas for this page:
   ol
     li Edit, delete, complete buttons on task rows based on User Roles
     li Present different views for different Roles
+    li Set up task list in columns in some way
+    
     

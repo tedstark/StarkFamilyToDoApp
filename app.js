@@ -3,28 +3,29 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+require('dotenv').config();
 
 //For Timestamp messages in console
 require('console-stamp')(console, 'HH:MM:ss');
 
-//Initialize app
+//Initialize statements
 const app = express();
-
-//Bring in models
 let Task = require('./models/task');
+let env = process.env;
+let db = mongoose.connection;
 
 //Set Public folder path
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Database related
-  const dbName = 'starkfamtododb'
   //DB Connection
-  mongoose.connect('mongodb://localhost/'+dbName);
-  let db = mongoose.connection;
+  mongoose.connect(env.db_string);
+
   //Check DB connection
   db.once('open', function(err){
-    console.log('Connection made to Database: '+dbName);
+    console.log('Connection made to Database: '+env.db_name);
   })
+
   //Check for DB errors
   db.on('error', function(err){
     console.log(err);
@@ -44,12 +45,6 @@ app.set('view engine','pug');
   app.get('/', function(req,res){
     res.render('page_home', {
       title: 'This is the app home page!'
-    });
-  });
-  
-  app.get('/about', function(req,res){
-    res.render('about', {
-      title: 'This is the about page!'
     });
   });
 
@@ -82,7 +77,6 @@ app.set('view engine','pug');
     task.dueDate = req.body.input_DueDate
     task.tasktitle = req.body.input_Task
     task.taskbody = req.body.input_Body
-    console.log(task);
     task.save(function(err){
       if(err){
         console.log(err);
@@ -148,7 +142,7 @@ app.set('view engine','pug');
     });
   });
 
-//Start Server
+//Start App Server
 app.listen(3000, function(){
   console.log('Server started on port 3000.')
 });
