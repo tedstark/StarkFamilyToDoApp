@@ -2,7 +2,7 @@ extends page_layout
 
 block content
   h1 #{title}
-  form(method='POST',action='/edit/task/'+task._id)
+  form(method='POST',action='/tasks/edit/'+task._id)
     #form-group
       label Task Name:
       input.form-control(name='input_Task', type='text', value=task.tasktitle)
@@ -20,3 +20,7 @@ block content
         textarea.form-control(name='input_Body')= task.taskbody
     br
     input.btn.btn-success(type='submit',value='Submit Changes')   
+  br
+  p Fixes/enhancements for this page:
+  ol
+    li TBD

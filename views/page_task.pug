@@ -10,17 +10,14 @@ block content
     h6 Created by: #{creator}
     hr
     div 
-      a.btn.btn-success(href='/edit/task/'+task._id, class='edititems') Edit Task
-      a.btn.btn-danger.delete-task(href='#', data-id=task._id) Delete Task
+      a.btn.btn-success.btn-sm(href='/tasks/edit/'+task._id, class='edititems') Edit Task
+      a.btn.btn-danger.btn-sm.delete-task(href='#', data-id=task._id) Delete Task
     //- if user
     //-     if user.id ==article.author
     //-         a.btn.btn-info(href='/articles/edit/'+article._id) Edit Article
     //-         a.btn.btn-danger.delete-article(href='#', data-id=article._id) Delete Article
     br
-    p Content ideas for this page:
+    p Fixes/enhancements for this page:
     ol
-      li Change css for actual task data to be different
-      li Present different views for different Roles
-      li Set up task list in columns in some way
-      li Set up format for Due Date 
-      li Add created date to Creator line
+      li Change css for actual task data to be different from row namespace
+      li Add created date and last updated date (formatted)

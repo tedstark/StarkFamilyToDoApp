@@ -5,13 +5,20 @@ block content
   ul.list-group
       ol.list-group-item
         each task, i in tasks
-          li
-            a(href="/view/task/"+task._id)= task.tasktitle + ' - for ' + task.assignedTo
+          li.list-group-item-heading
+            a(href="/tasks/view/"+task._id)= 'For '+task.assignedTo+':  '+task.tasktitle
+            a.btn.btn-danger.btn-xs.float-sm-right.delete-task(href='#', data-id=task._id) Del
+            a.btn.btn-success.btn-xs.float-sm-right.complete-task(href='#', data-id=task._id) Done
+            a.btn.btn-info.btn-xs.float-sm-right.edit-task(href="/tasks/view/"+task._id) Info
   br
-  p Content ideas for this page:
+  p Fixes/enhancements for this page:
   ol
-    li Edit, delete, complete buttons on task rows based on User Roles
+    li 
+      del Place info, delete, complete buttons on task rows based on User Roles
     li Present different views for different Roles
     li Set up task list in columns in some way
+    li Set up confirmation message/feedback for Delete button.
+    li Fix redirect/render for Delete button to refresh the Task List page.
+    li Put formatted due date into task list.
     
     

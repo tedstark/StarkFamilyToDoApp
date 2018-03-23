@@ -18,9 +18,9 @@ html
               li.nav-item
                 a.nav-link(href='/') Home Page
               li.nav-item
-                a.nav-link(href='/view/tasks') Task List
+                a.nav-link(href='/tasks/view') Task List
               li.nav-item
-                a.nav-link(href='/add/task') Add New Task
+                a.nav-link(href='/tasks/add') Add New Task
           //- ul.navbar-nav.ml-auto
           //-   if user
           //-     li
@@ -32,20 +32,11 @@ html
           //-       a.nav-link(href='/users/login') User Login
       //- br
       .container
+        != messages('include_msgs', locals)
+        if errors
+          each error, i in errors
+            div(class="alert alert-danger") #{error.msg}  
         block content
         hr
         footer.myfooter
           p.copyright Copyright ©2018 Ted Stark
-      //-   != messages('message', locals)
-      //-   if errors
-      //-     each error, i in errors
-      //-       div(class="alert alert-danger") #{error.msg}  
-      //- block content
-      //- hr
-      //- footer
-      //-   div
-          //- a.btn.btn-info(href='/', class='tempnavbaritems') Home Page
-          //- a.btn.btn-info(href='/view/tasks', class='tempnavbaritems') Task List
-          //- a.btn.btn-info(href='/add/task', class='tempnavbaritems') Add Tasks
-          //- a.btn.btn-info(href='/edit', class='tempnavbaritems') Edit Tasks
-          //- p Copyright ©2018 Ted Stark

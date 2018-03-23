@@ -28,5 +28,15 @@
   background-color: #FFFFF0;
 }
 a {
-  display: block;
+  display: inline;
+}
+.list-group-item-heading{
+  font-size: 18px;
+}
+.btn-xs {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    border-radius: 0.2rem;
+    margin-left: 1em;
 }

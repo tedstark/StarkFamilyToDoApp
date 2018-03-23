@@ -3,6 +3,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const expressValidator = require('express-validator');
+const session = require('express-session');
 require('dotenv').config();
 
 //For Timestamp messages in console
@@ -40,6 +42,38 @@ app.set('view engine','pug');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
+  //Express Session Middleware
+  app.use(session({
+      secret: 'keyboard cat',
+      resave: true,
+      saveUninitialized: true,
+      // cookie: {secure: true}
+  }));
+
+  //Express Messages Middleware
+  app.use(require('connect-flash')());
+  app.use(function (req, res, next) {
+      res.locals.messages = require('express-messages')(req, res);
+      next();
+  });
+
+  // Express Validator Middleware
+  app.use(expressValidator({
+      errorFormatter: function(param, msg, value) {
+          var namespace = param.split('.')
+          , root = namespace.shift()
+          , formParam = root;
+          while(namespace.length) {
+              formParam += '[' + namespace.shift() + ']';
+          }
+          return {
+              param : formParam,
+              msg   : msg,
+              value : value
+          };
+      }
+  }));
+
 //Routes
   //DOM: Show 'Home' Page
   app.get('/', function(req,res){
@@ -48,101 +82,11 @@ app.set('view engine','pug');
     });
   });
 
-  //DOM: Show 'Task List' Page
-  app.get('/view/tasks', function(req,res){
-    Task.find({}, function(err, tasks){
-      if(err){
-        console.log(err);
-      } else {
-        res.render('page_tasklist', {
-          title: 'View Current Tasks',
-          tasks: tasks
-        });
-      }
-    })
-  });
-
-  //DOM: Show 'Add a Task' Page
-  app.get('/add/task', function(req,res){
-    res.render('page_taskadd', {
-      title: 'Add a New Task'
-    });
-  });
-
-  //POST: Add a Task to DB
-  app.post('/add/task', function(req,res){
-    let task = new Task();
-    task.creator = req.body.input_Creator
-    task.assignedTo = req.body.input_Assigned
-    task.dueDate = req.body.input_DueDate
-    task.tasktitle = req.body.input_Task
-    task.taskbody = req.body.input_Body
-    task.save(function(err){
-      if(err){
-        console.log(err);
-        return;
-      } else {
-          // req.flash('success', 'Article added!');
-          res.redirect('/view/tasks');
-      }
-    })
-  });
-
-  //DOM: Show a single Task page
-  app.get('/view/task/:id', function (req,res) {
-      Task.findById(req.params.id, function (err, task) {
-          res.render('page_task', {
-              task:task,
-              tasktitle:task.tasktitle,
-              assignedTo:task.assignedTo,
-              dueDate:task.dueDate,
-              taskbody:task.taskbody,
-              creator:task.creator
-          })
-      });
-  });
-
-  //DOM: Show 'Edit a Task' Page
-  app.get('/edit/task/:id', function(req,res){
-    Task.findById(req.params.id, function(err, task){
-      res.render('page_taskedit', {
-        title: 'Edit a Task:',
-        task:task
-      });
-    });
-  });
-
-  //POST: Edit a task in database
-  app.post('/edit/task/:id', function(req,res){
-      let task = {};
-      task.assignedTo = req.body.input_Assigned
-      task.dueDate = req.body.input_DueDate
-      task.tasktitle = req.body.input_Task
-      task.taskbody = req.body.input_Body
-      let query = {_id:req.params.id};
-      Task.update(query, task, function (err) {
-          if(err){
-              console.log(err);
-              return;
-          } else {
-              // req.flash('success', 'Task updated!');
-              res.redirect('/view/tasks');
-          }
-      })
-  });
-
-  // Delete article route, performs database delete
-  app.delete('/delete/task/:id', function (req,res) {
-    let query = {_id:req.params.id}
-    Task.remove(query, function (err) {
-      if(err){
-        console.log(err);
-      }
-      res.send('Success');
-    });
-  });
+  //Task Routes File
+  let tasks = require('./routes/routes_tasks');
+  app.use('/tasks', tasks);
 
 //Start App Server
 app.listen((process.env.PORT || 3000), function(){
-  console.log('Server started on port 3000 (local) or '+process.env.PORT+'(heroku).');
+  console.log('Server started on port 3000 (localhost) or '+process.env.PORT+' (heroku).');
 });
