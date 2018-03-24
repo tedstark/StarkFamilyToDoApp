@@ -1,0 +1,30 @@
+extends page_layout
+
+block content
+  h1 #{title}
+  form(method='POST',action='/users/add')
+    #form-group
+        label Full Name:
+        input.form-control(name='input_fullname', type='text')
+    br
+    #form-group
+      label Username:
+      input.form-control(name='input_username', type='text')
+    br
+    #form-group
+      label Email Address:
+      input.form-control(name='input_email', type='email')
+    br
+    #form-group
+      label Password:
+      input.form-control(name='input_password', type='password')
+    br
+    #form-group
+      label Confirm Password:
+      input.form-control(name='input_password2', type='password')
+    br
+    input.btn.btn-success(type='submit',value='Submit User') 
+  br
+  p Fixes/enhancements for this page:
+  ol
+    li Put password fields on one line 

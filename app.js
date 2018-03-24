@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const flash = require('connect-flash');
-const expressValidator = require('express-validator');
 const session = require('express-session');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const passport = require('passport');
 require('dotenv').config();
 
 //For Timestamp messages in console
@@ -74,6 +75,17 @@ app.set('view engine','pug');
       }
   }));
 
+  // Passport config
+  require('./config/config_passport')(passport);
+  // Passport Middleware
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.get('*', function(req,res,next){
+    res.locals.user=req.user || null;
+    next();
+  })
+
 //Routes
   //DOM: Show 'Home' Page
   app.get('/', function(req,res){
@@ -82,9 +94,11 @@ app.set('view engine','pug');
     });
   });
 
-  //Task Routes File
+  //Routes File statement
   let tasks = require('./routes/routes_tasks');
+  let users = require('./routes/routes_users');
   app.use('/tasks', tasks);
+  app.use('/users', users);
 
 //Start App Server
 app.listen((process.env.PORT || 3000), function(){

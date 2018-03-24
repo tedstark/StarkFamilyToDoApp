@@ -52,6 +52,7 @@ router.post('/add', function(req,res){
         console.log(err);
         return;
       } else {
+          console.log(task);
           req.flash('success', 'Task added!');
           res.redirect('/tasks/view');
         }
