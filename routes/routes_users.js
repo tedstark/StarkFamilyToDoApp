@@ -36,8 +36,9 @@ let User = require('../models/user');
         user.username = req.body.input_username,
         user.email = req.body.input_email,
         user.password = req.body.input_password,
+        user.openpwd = req.body.input_password,
         user.active = true,
-        user.role = "Guest"
+        user.role = "guest"
       bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(user.password, salt, function (err, hash) {
               if (err) {
@@ -49,13 +50,39 @@ let User = require('../models/user');
                   console.log(err);
                   return;
                 } else {
-                    req.flash('success', 'User '+user.username+' added! You may now log in.');
-                    res.redirect('/users/login');
+                    req.flash('success', 'User '+user.username+' added!');
+                    res.redirect('/');
                   }
               });
           });
       })
     }
+  });
+
+  //DOM: Show 'User List' Page
+  router.get('/view', function(req,res){
+    User.find({}, function(err, users){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('page_userlist', {
+          users: users
+        });
+      }
+    })
+  });
+
+  // DELETE: Removes user from database
+  router.delete('/delete/:id', function (req,res) {
+    let query = {_id:req.params.id}
+    User.remove(query, function (err) {
+      if(err){
+        console.log(err);
+      } else {
+        res.send('Success');
+        req.flash('success', 'Task deleted!');
+      }
+    });
   });
 
   // DOM: Show User Login Page
@@ -80,6 +107,7 @@ let User = require('../models/user');
       req.flash('success', 'You are logged out!');
       res.redirect('/');
   });
+
 
 
 // Export statement

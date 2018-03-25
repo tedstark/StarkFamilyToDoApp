@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Stark Family To Do App
+    title Family Job/To Do App
     link(rel='stylesheet', href='/css/bootstrap.css')
     link(rel='stylesheet', href='/css/style.css')
     script(type='text/javascript' src='/js/jquery.js')
@@ -17,18 +17,21 @@ html
             ul.navbar-nav.mr-auto
               li.nav-item
                 a.nav-link(href='/') Home Page
-              li.nav-item
-                a.nav-link(href='/tasks/view') Task List
               if user
                 li.nav-item
+                  a.nav-link(href='/tasks/view') Task List
+                li.nav-item
                   a.nav-link(href='/tasks/add') Add New Task
+                if user.role =='parent'
+                  li.nav-item
+                    a.nav-link(href='/users/view') User List
+                  li.nav-item
+                    a.nav-link(href='/users/add') Add a User
             ul.navbar-nav.ml-auto
               if user
                 li.nav-item
                   a(href='/users/logout') Logout
               else
-                li.nav-item
-                  a.nav-link(href='/users/add') Add a User
                 li.nav-item
                   a.nav-link(href='/users/login') User Login
       br

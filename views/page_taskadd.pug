@@ -3,17 +3,13 @@ extends page_layout
 block content
   h1 #{title}
   form(method='POST',action='/tasks/add')
-    #form-group
-        label Creator:
-        input.form-control(name='input_Creator', type='text')
-    br
+    //- #form-group
+    //-     label Creator:
+    //-     input.form-control(name='input_Creator', type='text')
+    //- br
     #form-group
         label Assigned To:
         input.form-control(name='input_Assigned', type='text')
-    br
-    #form-group
-        label Due Date:
-        input.form-control(name='input_DueDate', type='date')
     br
     #form-group
         label Task Name:
@@ -22,6 +18,10 @@ block content
     #form-group
         label Task Description:
         textarea.form-control(name='input_Body')
+    br
+    #form-group
+        label Due Date:
+        input.form-control(name='input_DueDate', type='date')
     br
     input.btn.btn-success(type='submit',value='Submit Task') 
   br

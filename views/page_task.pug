@@ -10,8 +10,10 @@ block content
     h6 Created by: #{creator}
     hr
     div 
-      a.btn.btn-success.btn-sm(href='/tasks/edit/'+task._id, class='edititems') Edit Task
-      a.btn.btn-danger.btn-sm.delete-task(href='#', data-id=task._id) Delete Task
+    if user
+        if user._id ==task.creator || user.role =='parent'
+          a.btn.btn-success.btn-sm(href='/tasks/edit/'+task._id, class='edititems') Edit Task
+          a.btn.btn-danger.btn-sm.delete-task(href='#', data-id=task._id) Delete Task
     //- if user
     //-     if user.id ==article.author
     //-         a.btn.btn-info(href='/articles/edit/'+article._id) Edit Article

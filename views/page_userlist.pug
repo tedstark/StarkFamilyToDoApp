@@ -1,0 +1,18 @@
+extends page_layout
+
+block content
+  h1 Current Active Users
+  br
+  ul.list-group
+      ol.list-group-item
+        each user, i in users
+          li.list-group-item-heading
+            p= user.username+':  '+user.fullname+' | '+user.email+' | '+user.role
+              a.btn.btn-danger.btn-xs.float-sm-right.delete-user(href='#', data-id=user._id) Del
+              a.btn.btn-info.btn-xs.float-sm-right.edit-user(href="/users/view/"+user._id) Edit
+  br
+  p Fixes/enhancements for this page:
+  ol
+    li TBD
+    
+    
