@@ -15,7 +15,7 @@ $('.delete-task').on('click', function (e) {
           type:'DELETE',
           url: '/tasks/delete/'+id,
           success: function (response) {
-            window.location.href='/'; //Why can't I make this a different location in the views?
+            window.location.href='/tasks/view'; //Why can't I make this a different location in the views?
             req.flash('success', 'Task deleted!');
           },
           error: function (err) {
@@ -34,7 +34,7 @@ $('.delete-user').on('click', function (e) {
           type:'DELETE',
           url: '/users/delete/'+id,
           success: function (response) {
-            window.location.href='/'; //Why can't I make this a different location in the views?
+            window.location.href='/users/view'; //Why can't I make this a different location in the views?
           },
           error: function (err) {
               console.log(err);

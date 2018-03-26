@@ -1,23 +1,33 @@
 extends page_layout
 
 block content
-  h1 #{title}
+  h1 Tasks to Complete
   ul.list-group
       ol.list-group-item
         each task, i in tasks
-          if user
-            if user.fullname ==task.assignedto
+          if user.fullname ==task.assignedto && task.complete ==false
+            //- if user.fullname ==task.assignedto
+            li.list-group-item-heading
+              a.task-item-small(href="/tasks/view/"+task._id)= task.tasktitle + ' from ' + task.creator
+              if (task.assignedto ==user.fullname || user.role =='parent') && task.complete ==false
+                a.btn.btn-success.btn-xs.float-sm-right.complete-task(href='/tasks/complete/'+task._id, data-id=task._id) Done!
+              if user.fullname ==task.creator || user.role =='parent'
+                a.btn.btn-info.btn-xs.float-sm-right.edit-task(href='/tasks/edit/'+task._id) Edit
+                a.btn.btn-danger.btn-xs.float-sm-right.delete-task(href='#', data-id=task._id) Del
+  br
+  h1 Tasks I've Completed
+  ul.list-group
+      ol.list-group-item
+        each task, i in tasks
+          if user.fullname ==task.assignedto && task.complete ==true
               li.list-group-item-heading
                 a.task-item-small(href="/tasks/view/"+task._id)= task.tasktitle + ' from ' + task.creator
-                if (task.assignedto ==user.fullname || user.role =='parent') && task.complete ==false
-                  a.btn.btn-success.btn-xs.float-sm-right.complete-task(href='#', data-id=task._id) Done!
                 if user.fullname ==task.creator || user.role =='parent'
-                  a.btn.btn-info.btn-xs.float-sm-right.edit-task(href="/tasks/edit/"+task._id) Edit
+                  a.btn.btn-info.btn-xs.float-sm-right.edit-task(href='/tasks/edit/'+task._id) Edit
                   a.btn.btn-danger.btn-xs.float-sm-right.delete-task(href='#', data-id=task._id) Del
   br
   hr
-  if user
-    if user.fullname =='Ted Stark'      
+  if user.fullname =='Ted Stark'      
       p Fixes/enhancements for this page:
       ol
         li TBD

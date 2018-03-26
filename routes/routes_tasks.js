@@ -149,6 +149,7 @@ let User = require('../models/user');
 
   //POST: Complete a task in database
   router.post('/complete/:id', function(req,res){
+      console.log('Click');
       let task = {};
       task.complete = true
       let query = {_id:req.params.id};
@@ -157,6 +158,7 @@ let User = require('../models/user');
               console.log(err);
               return;
           } else {
+              console.log('Success!');
               req.flash('success', 'Task Completed!');
               res.redirect('/tasks/view');
           }
