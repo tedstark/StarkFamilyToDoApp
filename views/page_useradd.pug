@@ -25,6 +25,8 @@ block content
     br
     input.btn.btn-success(type='submit',value='Submit User') 
   br
-  p Fixes/enhancements for this page:
-  ol
-    li Put password fields on one line 
+  if user
+    if user.fullname =='Ted Stark'    
+      p Fixes/enhancements for this page:
+      ol
+        li Put password fields on one line 

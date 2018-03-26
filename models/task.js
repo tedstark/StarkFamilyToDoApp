@@ -6,11 +6,11 @@ let taskSchema = mongoose.Schema({
         type:String,
         required:false
     },
-    assignedTo:{
+    assignedto:{
         type:String,
         required:true
     },
-    dueDate:{
+    duedate:{
         type:Date,
         required:true
     },
@@ -28,8 +28,8 @@ let taskSchema = mongoose.Schema({
     }
 },
 {timestamps: {
-  createdAt:'Created',
-  updatedAt:'Updated'
+  createdAt:'created',
+  updatedAt:'updated'
 }
 });
 let Task = module.exports = mongoose.model('Task', taskSchema);

@@ -1,23 +1,58 @@
 extends page_layout
 
 block content
-  h1 Home Page
-  p Content ideas for this page:
-  ol
-    li List for parents to see all incomplete tasks by Assignees
-    li List for parents to see all tasks by Assignees
-    li Buttons for parents to Add Tasks or users
-    li Home Page only for Parents? Kids get their task list as Home Page?
-    
-  p Fixes/enhancements for the App:
-  ol
-    li 
-      del Add User registration/Login
-    li 
-      del Setup messaging feedback and validation for adding tasks
-    li Add access control and Roles
-    li Add User administration functionality
-    li 
-
-    
-    
+  span.homepage_span
+    h1.page-header #{title}
+  br
+  if !user
+    .modal-dialog
+      .modal-content
+        .modal-heading
+          h2.text-center User Login
+        hr
+        .modal-body
+          form(role='form',method='POST', action='/users/login')
+            .form-group
+              .input-group
+                span.input-group-addon
+                  span.glyphicon.glyphicon-user
+                input.form-control(name='username',type='text', placeholder='Username')
+            .form-group
+              .input-group
+                span.input-group-addon
+                  span.glyphicon.glyphicon-lock
+                input.form-control(name='password',type='password', placeholder='Password')
+            .form-group.text-center
+              button.btn.btn-info.btn-lg.mybtn-info-color(type='submit') Login
+              //- a.btn.btn-link(href='#') forget Password
+  if user 
+    div.homepage-divs
+      a.btn.btn-primary.btn-lg.btns.mybtn-info-color(href='/tasks/view/mine') See My Tasks
+      a.btn.btn-primary.btn-lg.btns.mybtn-info-color(href='/tasks/add') Add New Task
+    br
+  if user
+    if user.role =='parent' || user.role =='admin'
+      div.homepage-divs
+        a.btn.btn-primary.btn-lg.btns.mybtn-info-color(href='/tasks/view') All Tasks
+        a.btn.btn-primary.btn-lg.btns.mybtn-info-color(href='/tasks/view_user') Tasks by User
+      br
+      div.homepage-divs
+        a.btn.btn-primary.btn-lg.btns.mybtn-info-color(href='/users/admin') User Admin
+  hr
+  if user
+    if user.fullname =='Ted Stark'      
+      p Content ideas for this page:
+      ol
+        li List for parents to see all incomplete tasks by Assignees
+        li List for parents to see all tasks by Assignees
+        li Buttons for parents to Add Tasks or users
+        li Home Page only for Parents? Kids get their task list as Home Page?
+        
+      p Fixes/enhancements for the App:
+      ol
+        li 
+          del Add User registration/Login
+        li 
+          del Setup messaging feedback and validation for adding tasks
+        li Add access control and Roles
+        li Add User administration functionality

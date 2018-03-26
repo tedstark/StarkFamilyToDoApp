@@ -3,6 +3,7 @@ const router = express.Router();
 const dateformat = require('dateformat');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const moment = require('moment-timezone');
 
 // Bring in models
 let Task = require('../models/task');
@@ -16,8 +17,24 @@ let User = require('../models/user');
         console.log(err);
       } else {
         res.render('page_tasklist', {
-          title: 'View Current Tasks',
+          title: 'View All Tasks',
           tasks: tasks
+          // duedate:dateformat(task.duedate, 'fullDate') //Unable to make this work for object within array
+        });
+      }
+    })
+  });
+
+  //DOM: Show 'My Task List' Page
+  router.get('/view/mine', function(req,res){
+    Task.find({}, function(err, tasks){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('page_tasklist-self', {
+          title: 'Tasks Assigned to Me',
+          tasks: tasks
+          // duedate:dateformat(task.duedate, 'fullDate') //Unable to make this work for object within array
         });
       }
     })
@@ -47,11 +64,17 @@ let User = require('../models/user');
         });
     } else {
       let task = new Task();
-      task.creator = req.user._id;
-      task.assignedTo = req.body.input_Assigned
-      task.dueDate = req.body.input_DueDate
+      task.creator = req.user.fullname;
+      console.log(req.user.role);
+      if (req.user.role=='child') {
+        task.assignedto = req.user.fullname
+      } else {
+        task.assignedto = req.body.input_Assigned
+      }
+      task.duedate = moment.tz(req.body.input_DueDate, 'America/Phoenix')
       task.tasktitle = req.body.input_Task
       task.taskbody = req.body.input_Body
+      task.complete = false
       task.save(function(err){
         if(err){
           console.log(err);
@@ -65,11 +88,21 @@ let User = require('../models/user');
       }
     });
 
+    //DOM: Show 'Edit a Task' Page
+    router.get('/edit/:id', function(req,res){
+      Task.findById(req.params.id, function(err, task){
+        res.render('page_taskedit', {
+          title: task.tasktitle,
+          task:task
+        });
+      });
+    });
+
   //POST: Edit a task in database
   router.post('/edit/:id', function(req,res){
       let task = {};
-      task.assignedTo = req.body.input_Assigned
-      task.dueDate = req.body.input_DueDate
+      task.assignedto = req.body.input_Assigned
+      task.duedate = req.body.input_DueDate
       task.tasktitle = req.body.input_Task
       task.taskbody = req.body.input_Body
       let query = {_id:req.params.id};
@@ -79,19 +112,9 @@ let User = require('../models/user');
               return;
           } else {
               req.flash('success', 'Task updated!');
-              res.redirect('/view');
+              res.redirect('/tasks/view');
           }
       })
-  });
-
-  //DOM: Show 'Edit a Task' Page
-  router.get('/edit/:id', function(req,res){
-    Task.findById(req.params.id, function(err, task){
-      res.render('page_taskedit', {
-        title: task.tasktitle,
-        task:task
-      });
-    });
   });
 
   // DELETE: Removes task from database
@@ -114,13 +137,30 @@ let User = require('../models/user');
           res.render('page_task', {
               task:task,
               tasktitle:task.tasktitle,
-              assignedTo:task.assignedTo,
-              dueDate:dateformat(task.dueDate, 'fullDate'),
+              assignedto:task.assignedto,
+              duedate:dateformat(task.duedate, 'fullDate'),
               taskbody:task.taskbody,
-              creator:task.creator
+              creator:task.creator,
+              created:dateformat(task.created, 'fullDate')
           });
         })
       });
+  });
+
+  //POST: Complete a task in database
+  router.post('/complete/:id', function(req,res){
+      let task = {};
+      task.complete = true
+      let query = {_id:req.params.id};
+      Task.update(query, task, function (err) {
+          if(err){
+              console.log(err);
+              return;
+          } else {
+              req.flash('success', 'Task Completed!');
+              res.redirect('/tasks/view');
+          }
+      })
   });
 
   // Access control

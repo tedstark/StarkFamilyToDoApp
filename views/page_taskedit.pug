@@ -9,7 +9,7 @@ block content
     br
     #form-group
         label Assigned To:
-        input.form-control(name='input_Assigned', type='text', value=task.assignedTo)
+        input.form-control(name='input_Assigned', type='text', value=task.assignedto)
     br
     #form-group
         label Due Date:
@@ -21,6 +21,9 @@ block content
     br
     input.btn.btn-success(type='submit',value='Submit Changes')   
   br
-  p Fixes/enhancements for this page:
-  ol
-    li TBD
+  hr
+  if user
+    if user.fullname =='Ted Stark'    
+      p Fixes/enhancements for this page:
+      ol
+        li TBD

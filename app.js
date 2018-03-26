@@ -6,6 +6,7 @@ const session = require('express-session');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const passport = require('passport');
+const moment = require('moment-timezone');
 require('dotenv').config();
 
 //For Timestamp messages in console
@@ -90,7 +91,7 @@ app.set('view engine','pug');
   //DOM: Show 'Home' Page
   app.get('/', function(req,res){
     res.render('page_home', {
-      title: 'This is the app home page!'
+      title: 'Family Task/To Do App'
     });
   });
 

@@ -22,7 +22,7 @@ html
                   a.nav-link(href='/tasks/view') Task List
                 li.nav-item
                   a.nav-link(href='/tasks/add') Add New Task
-                if user.role =='parent'
+                if user.role =='parent' || user.role =='admin'
                   li.nav-item
                     a.nav-link(href='/users/view') User List
                   li.nav-item
@@ -30,10 +30,10 @@ html
             ul.navbar-nav.ml-auto
               if user
                 li.nav-item
-                  a(href='/users/logout') Logout
-              else
-                li.nav-item
-                  a.nav-link(href='/users/login') User Login
+                  a.nav-link(href='/users/logout')= 'Logout '+user.fullname
+              //- else
+              //-   li.nav-item
+              //-     a.nav-link(href='/users/login') User Login
       br
       .container
         != messages('include_msgs', locals)

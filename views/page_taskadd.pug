@@ -7,6 +7,7 @@ block content
     //-     label Creator:
     //-     input.form-control(name='input_Creator', type='text')
     //- br
+    //- if user.role!= 'child'
     #form-group
         label Assigned To:
         input.form-control(name='input_Assigned', type='text')
@@ -25,6 +26,9 @@ block content
     br
     input.btn.btn-success(type='submit',value='Submit Task') 
   br
-  p Fixes/enhancements for this page:
-  ol
-    li TBD
+  hr
+  if user
+    if user.fullname =='Ted Stark'    
+      p Fixes/enhancements for this page:
+      ol
+        li TBD
