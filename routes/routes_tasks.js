@@ -19,7 +19,7 @@ let User = require('../models/user');
         res.render('page_tasklist', {
           title: 'View All Tasks',
           tasks: tasks
-          // duedate:dateformat(task.duedate, 'fullDate') //Unable to make this work for object within array
+          //duedate:dateformat(task.duedate, 'fullDate') //Unable to make this work for object within array
         });
       }
     })
@@ -40,6 +40,32 @@ let User = require('../models/user');
     })
   });
 
+  //DOM: Show 'Sean's Task List' Page
+  router.get('/view/sean', function(req,res){
+    Task.find({}, function(err, tasks){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('page_tasklist-sean', {
+          tasks: tasks
+        });
+      }
+    })
+  });
+
+  //DOM: Show 'Ryan's Task List' Page
+  router.get('/view/ryan', function(req,res){
+    Task.find({}, function(err, tasks){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('page_tasklist-ryan', {
+          tasks: tasks
+        });
+      }
+    })
+  });
+
   //DOM: Show 'Add a Task' Page
   //router.get('/add', ensureAuthenticated, function(req,res){
   router.get('/add', function(req,res){
@@ -51,10 +77,11 @@ let User = require('../models/user');
   //POST: Add a Task to DB
   router.post('/add', function(req,res){
     // req.checkBody('input_Creator', 'Creator is required').notEmpty();
-    req.checkBody('input_Assigned', 'Assigned To is required').notEmpty();
+    if (req.user.role!='child') {
+      req.checkBody('input_Assigned', 'Assigned To is required').notEmpty();
+    }
     req.checkBody('input_DueDate', 'Due Date is required').notEmpty();
     req.checkBody('input_Task', 'Task Title is required').notEmpty();
-
     // Get Errors and handle
     let errors = req.validationErrors();
     if(errors){
@@ -92,8 +119,8 @@ let User = require('../models/user');
     router.get('/edit/:id', function(req,res){
       Task.findById(req.params.id, function(err, task){
         res.render('page_taskedit', {
-          title: task.tasktitle,
-          task:task
+          task:task,
+          edittask:task.tasktitle
         });
       });
     });
@@ -105,14 +132,19 @@ let User = require('../models/user');
       task.duedate = req.body.input_DueDate
       task.tasktitle = req.body.input_Task
       task.taskbody = req.body.input_Body
+      if (req.body.input_Checked=='completed') {
+        task.complete=true
+      } else {
+        task.complete=false
+      }
       let query = {_id:req.params.id};
       Task.update(query, task, function (err) {
           if(err){
               console.log(err);
               return;
           } else {
-              req.flash('success', 'Task updated!');
-              res.redirect('/tasks/view');
+              req.flash('success', 'Task updated!!!');
+              res.redirect('/tasks/view/mine');
           }
       })
   });
@@ -141,27 +173,46 @@ let User = require('../models/user');
               duedate:dateformat(task.duedate, 'fullDate'),
               taskbody:task.taskbody,
               creator:task.creator,
-              created:dateformat(task.created, 'fullDate')
+              created:dateformat(task.created, 'fullDate'),
+              complete:task.complete
           });
         })
       });
   });
 
-  //POST: Complete a task in database
+  //POST: Mark a task complete in database via form
   router.post('/complete/:id', function(req,res){
-      console.log('Click');
-      let task = {};
-      task.complete = true
-      let query = {_id:req.params.id};
-      Task.update(query, task, function (err) {
-          if(err){
-              console.log(err);
-              return;
-          } else {
-              console.log('Success!');
-              req.flash('success', 'Task Completed!');
-              res.redirect('/tasks/view');
-          }
+    let task = {};
+    if (req.body.input_Checked=='completed') {
+      task.complete=true
+    } else {
+      task.complete=false
+    }
+    let query = {_id:req.params.id};
+    Task.update(query, task, function (err) {
+        if(err){
+            console.log(err);
+            return;
+        } else {
+            req.flash('success', 'Task Completed!');
+            res.redirect('/');
+        }
+      })
+  });
+
+  //POST: Mark a task complete in database via form
+  router.post('/clickcomp/:id', function(req,res){
+    let task = {};
+    task.complete=true
+    let query = {_id:req.params.id};
+    Task.update(query, task, function (err) {
+        if(err){
+            console.log(err);
+            return;
+        } else {
+            req.flash('success', 'Task Completed!');
+            res.redirect('/tasks/view/mine');
+        }
       })
   });
 
@@ -172,7 +223,7 @@ let User = require('../models/user');
       return next;
     } else {
       req.flash('danger', 'Please login.');
-      res.redirect('/users/login');
+      res.redirect('/');
     }
   }
 

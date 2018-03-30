@@ -1,45 +1,64 @@
 doctype html
 html
   head
-    title Family Job/To Do App
-    link(rel='stylesheet', href='/css/bootstrap.css')
+    title Stark Family Tasks
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon', type='image/png', href='/images/favicon.png')
+    link(href='//fonts.googleapis.com/css?family=Raleway:400,300,600', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='/css/skeleton.css')
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/skeleton_cust.css')  
     link(rel='stylesheet', href='/css/style.css')
     script(type='text/javascript' src='/js/jquery.js')
-    script(type='text/javascript' src='/js/bootstrap.js')
+    script(type='text/javascript' src='/js/skeleton.js')
     script(type='text/javascript' src='/js/main.js')
-    body.mybgcolor
-      .container
-        nav.navbar.navbar-expand-md.navbar-dark.mynavbar-color
-          //- a.navbar-brand(href='/') Knowledgebase
-          button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarsExampleDefault', aria-controls='navbarsExampleDefault', aria-expanded='false', aria-label='Toggle navigation')
-            span.navbar-toggler-icon
-          #navbarsExampleDefault.collapse.navbar-collapse
-            ul.navbar-nav.mr-auto
-              li.nav-item
-                a.nav-link(href='/') Home Page
+    body
+      div.container
+        h3 Stark Family Tasks
+        nav.navbar
+          div.container
+            ul.navbar-list
+              li.navbar-item
+                a.navbar-link(href='/') Home
               if user
-                li.nav-item
-                  a.nav-link(href='/tasks/view') Task List
-                li.nav-item
-                  a.nav-link(href='/tasks/add') Add New Task
-                if user.role =='parent' || user.role =='admin'
-                  li.nav-item
-                    a.nav-link(href='/users/view') User List
-                  li.nav-item
-                    a.nav-link(href='/users/add') Add a User
-            ul.navbar-nav.ml-auto
+                li.navbar-item
+                  a.navbar-link(href='#', data-popover='#codeNavPopover') Tasks
+                  #codeNavPopover.popover
+                    ul.popover-list
+                      li.popover-item
+                        a.popover-link(href='/tasks/add') Add a Task
+                      li.popover-item
+                        a.popover-link(href='/tasks/view/mine') All My Tasks
+                      if user.role =='parent'
+                        li.popover-item
+                          a.popover-link(href='/tasks/view/sean') Sean's Tasks                        
+                        li.popover-item
+                          a.popover-link(href='/tasks/view/ryan') Ryan's Tasks  
+                        li.popover-item
+                          a.popover-link(href='/tasks/view') All Tasks
               if user
-                li.nav-item
-                  a.nav-link(href='/users/logout')= 'Logout '+user.fullname
-              //- else
-              //-   li.nav-item
-              //-     a.nav-link(href='/users/login') User Login
-      br
-      .container
+                if user.role =='parent'
+                  li.navbar-item
+                    a.navbar-link(href='#', data-popover='#moreNavPopover') Users
+                    #moreNavPopover.popover
+                      ul.popover-list
+                        li.popover-item
+                          a.popover-link(href='/users/view') User List
+                        li.popover-item
+                          a.popover-link(href='/users/add') Add a User
+              if user
+                li.navbar-item-right
+                  a.navbar-link2(href='/users/logout')= 'Logout '+user.fullname  
+              if !user
+                li.navbar-item-right
+                  a.navbar-link2(href='#')='Demo'  
+
+
+        br
         != messages('include_msgs', locals)
         if errors
           each error, i in errors
-            div(class="alert alert-danger") #{error.msg}  
+            div.alert.alert-danger #{error.msg}  
         block content
         hr
         footer.myfooter

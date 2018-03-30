@@ -3,43 +3,45 @@ extends page_layout
 block content
   br
   if user && user.role=='parent'
-    h4 Open Tasks
+    h4 Ryan's Open Tasks
     table.u-full-width
       thead
         tr
           th Task
-          th For
           th From
+          th Due
           th 
       tbody
         each task, i in tasks
-          if task.complete ==false
+          if task.complete ==false && task.assignedto=='Ryan Stark'
             tr
               td
                 a(href="/tasks/view/"+task._id)= task.tasktitle
-              td=task.assignedto
               td=task.creator
+              td
               td
                 button.button.button-success.complete-task(href='#', data-id=task._id) Done
-                a.button.button-edit(href='/tasks/edit/'+task._id) Edit
-                button.button.button-delete.delete-task(href='#', data-id=task._id) Del
+                if user.fullname ==task.creator || user.role =='parent'
+                  a.button.button-edit(href='/tasks/edit/'+task._id) Edit
+                  button.button.button-delete.delete-task(href='#', data-id=task._id) Del
     br
-    h4 Completed Tasks
+    h4 Ryan's Completed Tasks
     table.u-full-width
       thead
         tr
           th Task
-          th For
           th From
+          th Due
           th 
       tbody
         each task, i in tasks
-          if task.complete ==true
+          if task.complete ==true && task.assignedto=='Ryan Stark'
             tr
               td
                 a(href="/tasks/view/"+task._id)= task.tasktitle
-              td=task.assignedto
               td=task.creator
               td
-                a.button.button-edit(href='/tasks/edit/'+task._id) Edit
-                button.button.button-delete.delete-task(href='#', data-id=task._id) Del
+              td
+                if user.fullname ==task.creator || user.role =='parent'
+                  a.button.button-edit(href='/tasks/edit/'+task._id) Edit
+                  button.button.button-delete.delete-task(href='#', data-id=task._id) Del

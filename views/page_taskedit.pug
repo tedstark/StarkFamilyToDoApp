@@ -1,29 +1,28 @@
 extends page_layout
 
 block content
-  h1 #{title}
+  h1 Edit: #{edittask}
   form(method='POST',action='/tasks/edit/'+task._id)
+    if user && user.role!='child'
+      #form-group
+        label(for='input_Assigned') Assigned To:
+        input.form-control(class='u-full-width', name='input_Assigned', type='text', value=task.assignedto)
+        br
+        br
     #form-group
-      label Task Name:
-      input.form-control(name='input_Task', type='text', value=task.tasktitle)
+      label(for='input_Task') Task Name:
+      input.form-control(class='u-full-width', name='input_Task', type='text', value=task.tasktitle)
     br
     #form-group
-        label Assigned To:
-        input.form-control(name='input_Assigned', type='text', value=task.assignedto)
+      label(for='input_Body') Task Description:
+      textarea.form-control(class='u-full-width',name='input_Body')= task.taskbody
     br
     #form-group
-        label Due Date:
-        input.form-control(name='input_DueDate', type='date') 
+      label(for='input_DueDate') Due Date:
+      input.form-control(name='input_DueDate', type='date')
     br
     #form-group
-        label Task Description:
-        textarea.form-control(name='input_Body')= task.taskbody
-    br
-    input.btn.btn-success(type='submit',value='Submit Changes')   
-  br
-  hr
-  if user
-    if user.fullname =='Ted Stark'    
-      p Fixes/enhancements for this page:
-      ol
-        li TBD
+      label.zebra(for='input_Checked') Task Completed:
+      input.zebra(name='input_Checked', type='checkbox', value='completed' checked=task.complete)
+    br  
+    input.button.button-primary(type='submit',value='Submit Changes') 

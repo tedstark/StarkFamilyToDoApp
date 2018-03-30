@@ -89,10 +89,23 @@ app.set('view engine','pug');
 
 //Routes
   //DOM: Show 'Home' Page
+  // app.get('/', function(req,res){
+  //   res.render('page_home', {
+  //     title: 'Stark Family Task/To Do App'
+  //   });
+  // });
+
+  //DOM: Show 'Task List' Page
   app.get('/', function(req,res){
-    res.render('page_home', {
-      title: 'Family Task/To Do App'
-    });
+    Task.find({}, function(err, tasks){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('page_home', {
+          tasks: tasks
+        });
+      }
+    })
   });
 
   //Routes File statement

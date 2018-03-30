@@ -1,33 +1,48 @@
 extends page_layout
 
 block content
-  h1 Tasks to Complete
-  ul.list-group
-      ol.list-group-item
+  br
+  if user
+    h4 Tasks I Need to Complete
+    table.u-full-width
+      thead
+        tr
+          th Task
+          th From
+          th Due
+          th 
+      tbody
         each task, i in tasks
           if user.fullname ==task.assignedto && task.complete ==false
-            //- if user.fullname ==task.assignedto
-            li.list-group-item-heading
-              a.task-item-small(href="/tasks/view/"+task._id)= task.tasktitle + ' from ' + task.creator
-              if (task.assignedto ==user.fullname || user.role =='parent') && task.complete ==false
-                a.btn.btn-success.btn-xs.float-sm-right.complete-task(href='/tasks/complete/'+task._id, data-id=task._id) Done!
-              if user.fullname ==task.creator || user.role =='parent'
-                a.btn.btn-info.btn-xs.float-sm-right.edit-task(href='/tasks/edit/'+task._id) Edit
-                a.btn.btn-danger.btn-xs.float-sm-right.delete-task(href='#', data-id=task._id) Del
-  br
-  h1 Tasks I've Completed
-  ul.list-group
-      ol.list-group-item
+            tr
+              td
+                a(href="/tasks/view/"+task._id)= task.tasktitle
+              td=task.creator
+              td
+              td
+                button.button.button-success.complete-task(href='#', data-id=task._id) Done
+                if user.fullname ==task.creator || user.role =='parent'
+                  a.button.button-edit(href='/tasks/edit/'+task._id) Edit
+                  button.button.button-delete.delete-task(href='#', data-id=task._id) Del
+    br
+    h4 Tasks I've Completed
+    table.u-full-width
+      thead
+        tr
+          th Task
+          th From
+          th Due
+          th 
+      tbody
         each task, i in tasks
           if user.fullname ==task.assignedto && task.complete ==true
-              li.list-group-item-heading
-                a.task-item-small(href="/tasks/view/"+task._id)= task.tasktitle + ' from ' + task.creator
+            tr
+              td
+                a(href="/tasks/view/"+task._id)= task.tasktitle
+              td=task.creator
+              td
+              td
                 if user.fullname ==task.creator || user.role =='parent'
-                  a.btn.btn-info.btn-xs.float-sm-right.edit-task(href='/tasks/edit/'+task._id) Edit
-                  a.btn.btn-danger.btn-xs.float-sm-right.delete-task(href='#', data-id=task._id) Del
-  br
-  hr
-  if user.fullname =='Ted Stark'      
-      p Fixes/enhancements for this page:
-      ol
-        li TBD
+                  a.button.button-edit(href='/tasks/edit/'+task._id) Edit
+                  button.button.button-delete.delete-task(href='#', data-id=task._id) Del
+                  

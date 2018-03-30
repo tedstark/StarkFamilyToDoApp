@@ -1,32 +1,28 @@
 extends page_layout
 
 block content
-  h1 #{title}
-  form(method='POST',action='/users/add')
-    #form-group
-        label Full Name:
-        input.form-control(name='input_fullname', type='text')
+  h1 Add a User
+  if user && user.role=='parent'
+    form(role='form', method='POST',action='/users/add')
+      #form-group
+        label(for='input_fullname') Full Name:
+        input.form-control(class='u-full-width', name='input_fullname', type='text')
+      br
+      #form-group
+        label(for='input_username') Username:
+        input.form-control(class='u-full-width', name='input_username', type='text')
+      br
+      #form-group
+        label(for='input_email') Email Address:
+        input.form-control(class='u-full-width', name='input_email', type='email')
+      br
+      div
+        #form-group.zebra
+          label(for='input_password') Password:
+          input.form-control(name='input_password', type='password')
+        #form-group.zebra
+          label(for='input_password 2') Confirm Password:
+          input.form-control(name='input_password2', type='password')
+      br
+      input.button.button-primary(type='submit',value='Submit User') 
     br
-    #form-group
-      label Username:
-      input.form-control(name='input_username', type='text')
-    br
-    #form-group
-      label Email Address:
-      input.form-control(name='input_email', type='email')
-    br
-    #form-group
-      label Password:
-      input.form-control(name='input_password', type='password')
-    br
-    #form-group
-      label Confirm Password:
-      input.form-control(name='input_password2', type='password')
-    br
-    input.btn.btn-success(type='submit',value='Submit User') 
-  br
-  if user
-    if user.fullname =='Ted Stark'    
-      p Fixes/enhancements for this page:
-      ol
-        li Put password fields on one line 

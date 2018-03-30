@@ -1,34 +1,28 @@
 extends page_layout
 
 block content
-  h1 #{title}
-  form(method='POST',action='/tasks/add')
-    //- #form-group
-    //-     label Creator:
-    //-     input.form-control(name='input_Creator', type='text')
-    //- br
-    //- if user.role!= 'child'
+  if user && user.role=='child'
+    h1 Add a Task for Myself
+  if user && user.role=='parent'
+    h1 Add a Task for Someone
+  form(role='form', method='POST',action='/tasks/add')
+    if user && user.role!='child'
+      #form-group
+      label(for='input_Assigned') Assigned To:
+      input.form-control(class='u-full-width', name='input_Assigned', type='text', placeholder='Family Member...')
+      br
+      br
     #form-group
-        label Assigned To:
-        input.form-control(name='input_Assigned', type='text')
+        label(for='input_Task') Task Name:
+        input.form-control(class='u-full-width', name='input_Task', type='text', placeholder='Task To Do...')
     br
     #form-group
-        label Task Name:
-        input.form-control(name='input_Task', type='text')
-    br
-    #form-group
-        label Task Description:
-        textarea.form-control(name='input_Body')
+        label(for='input_Body') Task Description:
+        textarea.form-control(class='u-full-width',name='input_Body', placeholder='More Details...')
     br
     #form-group
         label Due Date:
         input.form-control(name='input_DueDate', type='date')
     br
-    input.btn.btn-success(type='submit',value='Submit Task') 
+    input.button.button-primary(type='submit',value='Submit Task') 
   br
-  hr
-  if user
-    if user.fullname =='Ted Stark'    
-      p Fixes/enhancements for this page:
-      ol
-        li TBD

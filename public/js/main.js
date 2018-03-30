@@ -5,17 +5,19 @@ $(document).ready(function () {
 function init(){
   deleteTask();
   deleteUser();
+  completeTask();
 };
 
 function deleteTask () {
-$('.delete-task').on('click', function (e) {
-      $target = $(e.target);
+$('.delete-task').on('click', function (task) {
+      $target = $(task.target);
       var id = $target.attr('data-id');
       $.ajax({
           type:'DELETE',
           url: '/tasks/delete/'+id,
           success: function (response) {
-            window.location.href='/tasks/view'; //Why can't I make this a different location in the views?
+            location.reload(true)
+            // window.location.href='/tasks/view/mine';
             req.flash('success', 'Task deleted!');
           },
           error: function (err) {
@@ -26,15 +28,33 @@ $('.delete-task').on('click', function (e) {
 };
 
 function deleteUser () {
-$('.delete-user').on('click', function (e) {
+$('.delete-user').on('click', function (user) {
       console.log('Click!');
-      $target = $(e.target);
+      $target = $(user.target);
       var id = $target.attr('data-id');
       $.ajax({
           type:'DELETE',
           url: '/users/delete/'+id,
           success: function (response) {
-            window.location.href='/users/view'; //Why can't I make this a different location in the views?
+            location.reload(true)
+            req.flash('success', 'User deleted!');
+          },
+          error: function (err) {
+              console.log(err);
+          }
+      });
+  });
+};
+function completeTask () {
+$('.complete-task').on('click', function (task) {
+      $target = $(task.target);
+      var id = $target.attr('data-id');
+      $.ajax({
+          type:'POST',
+          url: '/tasks/clickcomp/'+id,
+          success: function (req,res) {
+            location.reload(true)
+            req.flash('success', 'Task completed!');
           },
           error: function (err) {
               console.log(err);

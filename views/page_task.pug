@@ -2,33 +2,29 @@ extends page_layout
 
 block content
   div 
-    span.task-header-big Task:   
-    span.task-item-big #{tasktitle}
+    label.task-header-big.zebra Task:
+    span.task-item-big.zebra #{tasktitle}
+    if task.complete==true
+      label.cheetah Completed
   div
-    span.task-header-small Assigned to: 
-    span.task-item-small #{assignedto}
+    label.task-header-big.zebra Assigned to: 
+    span.task-item-small.zebra #{assignedto}
   div
-    span.task-header-small Due Date: 
-    span.task-item-small #{duedate}
+    label.task-header-big.zebra Due Date: 
+    span.task-item-small.zebra #{duedate}
   div
-    span.task-body-header More Details: 
-    span.task-body #{taskbody}
+    label.task-body-big.zebra More Details: 
+    span.task-body.zebra #{taskbody}
   br
-  span.creation-info Created by: #{creator} on #{created}
+  label.creation-info.zebra Created by: 
+  span.task-body.zebra #{creator} on #{created}
   hr
-  div 
   if user
-      if user.fullname ==task.assignedto & task.complete ==false
-        a.btn.btn-success.btn-sm(method='POST',href='/tasks/complete/'+task._id, class='complete') Mark as Complete
-      if user.fullname ==task.creator || user.role =='parent' || user.role =='admin'
-        a.btn.btn-info.btn-sm(href='/tasks/edit/'+task._id, class='edititems') Edit Task
-        a.btn.btn-danger.btn-sm.delete-task(href='#', data-id=task._id) Delete Task
+      if user.fullname ==task.creator || user.role =='parent'
+        button.button.button-delete.leftside.delete-task(href='#', data-id=task._id) Del
+        a.button.button-edit.leftside(href='/tasks/edit/'+task._id) Edit
+      if (user.fullname ==task.assignedto || user.role=='parent') && task.complete==false
+        button.button.button-success.leftside.complete-task(href='#', data-id=task._id) Done
+
+
   br
-  if user
-    if user.fullname =='Ted Stark'   
-      p Fixes/enhancements for this page:
-      ol
-        li 
-          del Change css for actual task data to be different from row namespace
-        li 
-          del Add created date and last updated date (formatted)
