@@ -15,13 +15,13 @@ html
     body
       div.container
         h3 Stark Family Tasks
-        nav.navbar
+        nav.navbar(id='myNavBar')
           div.container
             ul.navbar-list
-              li.navbar-item
+              li.navbar-item-home(id='homeId')
                 a.navbar-link(href='/') Home
               if user
-                li.navbar-item
+                li.navbar-item-left(id='tasksId')
                   a.navbar-link(href='#', data-popover='#codeNavPopover') Tasks
                   #codeNavPopover.popover
                     ul.popover-list
@@ -38,7 +38,7 @@ html
                           a.popover-link(href='/tasks/view') All Tasks
               if user
                 if user.role =='parent'
-                  li.navbar-item
+                  li.navbar-item-left(id='usersId')
                     a.navbar-link(href='#', data-popover='#moreNavPopover') Users
                     #moreNavPopover.popover
                       ul.popover-list
@@ -47,11 +47,13 @@ html
                         li.popover-item
                           a.popover-link(href='/users/add') Add a User
               if user
-                li.navbar-item-right
-                  a.navbar-link2(href='/users/logout')= 'Logout '+user.fullname  
-              if !user
-                li.navbar-item-right
-                  a.navbar-link2(href='#')='Demo'  
+                li.navbar-item-right(id='logId')
+                  a.navbar-link2(href='/users/logout')= 'Logout '+user.fullname
+              li.navbar-item-icon(id='iconId')
+                a.navbar-link3(href='javascript:void(0);', onclick='skelNavBar()') &#9776;
+              //if !user
+              //  li.navbar-item-right
+              //    a.navbar-link2(href='#')='Demo'
 
 
         br
