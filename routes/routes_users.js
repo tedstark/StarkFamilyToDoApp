@@ -24,7 +24,7 @@ let User = require('../models/user');
     (req,res,next);
   })
 
-  // DOM: Logout and show Login page_home
+  // DOM: Logout and show Home page with Login block
   router.get('/logout', function (req,res) {
       req.logout();
       req.flash('success', 'You are logged out!');
@@ -45,7 +45,6 @@ let User = require('../models/user');
     req.checkBody('input_password', 'A password is required').notEmpty();
     req.checkBody('input_email', 'Email is not valid').isEmail();
     req.checkBody('input_password2', 'Passwords do not match').equals(req.body.input_password);
-
     // Error check and handling
     let errors = req.validationErrors();
     if(errors){
@@ -104,28 +103,61 @@ let User = require('../models/user');
     });
   });
 
-  //POST: Edit a task in database
+  //POST: Edit a User in the database
   router.post('/edit/:id', function(req,res){
+    req.checkBody('input_fullname', 'Name is required').notEmpty();
+    req.checkBody('input_username', 'User name is required').notEmpty();
+    req.checkBody('input_email', 'Email address is required').notEmpty();
+    req.checkBody('input_password', 'A password is required').notEmpty();
+    req.checkBody('input_email', 'Email is not valid').isEmail();
+    req.checkBody('input_password2', 'Passwords do not match').equals(req.body.input_password);
+    // Error check and handling
+    let errors = req.validationErrors();
+    if(errors){
+        res.render('page_useredit',{
+          errors:errors
+        });
+    } else {
       let user = {};
-      task.assignedto = req.body.input_Assigned
-      task.duedate = req.body.input_DueDate
-      task.tasktitle = req.body.input_Task
-      task.taskbody = req.body.input_Body
-      if (req.body.input_Checked=='completed') {
-        task.complete=true
-      } else {
-        task.complete=false
-      }
-      let query = {_id:req.params.id};
-      Task.update(query, task, function (err) {
-          if(err){
-              console.log(err);
-              return;
+        user.fullname = req.body.input_fullname,
+        user.username = req.body.input_username,
+        user.email = req.body.input_email,
+        user.password = req.body.input_password,
+        user.openpwd = req.body.input_password,
+        user.active = true
+      bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(user.password, salt, function (err, hash) {
+          if (err) {
+            console.log(err);
+            return;
           } else {
-              req.flash('success', 'Task updated!');
-              res.redirect('/tasks/view/mine');
+            user.password = hash;
+            let query = {_id:req.params.id};
+            User.update(query, user, function (err) {
+              if(err){
+                console.log(err);
+                return;
+              } else {
+                  req.flash('success', 'User '+user.username+' Updated!');
+                  res.redirect('/users/view/:id');
+                }
+            });
           }
+        });
       })
+    }
+});
+  //DOM: Show a single User page
+  router.get('/view/:id', function(req,res){
+    User.findById(req.params.id, function(err, user){
+      res.render('page_user', {
+        user:user,
+        fullname:user.fullname,
+        username:user.username,
+        email:user.email,
+        role:user.role
+      });
+    });
   });
 
   // DELETE: Removes user from database

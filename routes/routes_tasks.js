@@ -18,8 +18,8 @@ let User = require('../models/user');
       } else {
         res.render('page_tasklist', {
           title: 'View All Tasks',
-          tasks: tasks
-          //duedate:dateformat(task.duedate, 'fullDate') //Unable to make this work for object within array
+          tasks: tasks,
+          moment:moment
         });
       }
     })
@@ -33,8 +33,8 @@ let User = require('../models/user');
       } else {
         res.render('page_tasklist-self', {
           title: 'Tasks Assigned to Me',
-          tasks: tasks
-          // duedate:dateformat(task.duedate, 'fullDate') //Unable to make this work for object within array
+          tasks: tasks,
+          moment:moment
         });
       }
     })
@@ -47,7 +47,8 @@ let User = require('../models/user');
         console.log(err);
       } else {
         res.render('page_tasklist-sean', {
-          tasks: tasks
+          tasks: tasks,
+          moment:moment
         });
       }
     })
@@ -60,8 +61,10 @@ let User = require('../models/user');
         console.log(err);
       } else {
         res.render('page_tasklist-ryan', {
-          tasks: tasks
+          tasks: tasks,
+          moment: moment
         });
+
       }
     })
   });
@@ -120,7 +123,8 @@ let User = require('../models/user');
       Task.findById(req.params.id, function(err, task){
         res.render('page_taskedit', {
           task:task,
-          edittask:task.tasktitle
+          edittask:task.tasktitle,
+          moment:moment
         });
       });
     });
@@ -129,7 +133,7 @@ let User = require('../models/user');
   router.post('/edit/:id', function(req,res){
       let task = {};
       task.assignedto = req.body.input_Assigned
-      task.duedate = req.body.input_DueDate
+      task.duedate = moment.tz(req.body.input_DueDate, 'America/Phoenix')
       task.tasktitle = req.body.input_Task
       task.taskbody = req.body.input_Body
       if (req.body.input_Checked=='completed') {
@@ -137,13 +141,15 @@ let User = require('../models/user');
       } else {
         task.complete=false
       }
+      console.log(task.duedate);
       let query = {_id:req.params.id};
       Task.update(query, task, function (err) {
           if(err){
               console.log(err);
               return;
           } else {
-              req.flash('success', 'Task updated!!!');
+              console.log(task);
+              req.flash('success', 'Task updated!');
               res.redirect('/tasks/view/mine');
           }
       })
@@ -195,12 +201,12 @@ let User = require('../models/user');
             return;
         } else {
             req.flash('success', 'Task Completed!');
-            res.redirect('/');
+            res.redirect('/tasks/view/:id');
         }
       })
   });
 
-  //POST: Mark a task complete in database via form
+  //POST: Mark a task complete in database via list button
   router.post('/clickcomp/:id', function(req,res){
     let task = {};
     task.complete=true
@@ -211,7 +217,7 @@ let User = require('../models/user');
             return;
         } else {
             req.flash('success', 'Task Completed!');
-            res.redirect('/tasks/view/mine');
+            res.redirect('/tasks/view/');
         }
       })
   });

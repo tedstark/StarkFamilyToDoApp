@@ -10,7 +10,7 @@ block content
           th Task
           th For
           th From
-          th 
+          th Due
       tbody
         each task, i in tasks
           if task.complete ==false
@@ -19,7 +19,7 @@ block content
                 a(href="/tasks/view/"+task._id)= task.tasktitle
               td=task.assignedto
               td=task.creator
-              td
+              td=moment(task.duedate).format("MM/DD/YYYY")
                 button.button.button-success.complete-task(href='#', data-id=task._id) Done
                 a.button.button-edit(href='/tasks/edit/'+task._id) Edit
                 button.button.button-delete.delete-task(href='#', data-id=task._id) Del
@@ -31,7 +31,7 @@ block content
           th Task
           th For
           th From
-          th 
+          th Due
       tbody
         each task, i in tasks
           if task.complete ==true
@@ -40,6 +40,6 @@ block content
                 a(href="/tasks/view/"+task._id)= task.tasktitle
               td=task.assignedto
               td=task.creator
-              td
+              td=moment(task.duedate).format("MM/DD/YYYY")
                 a.button.button-edit(href='/tasks/edit/'+task._id) Edit
                 button.button.button-delete.delete-task(href='#', data-id=task._id) Del

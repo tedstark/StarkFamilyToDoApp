@@ -33,7 +33,7 @@ block content
               td
                 a(href="/tasks/view/"+task._id)= task.tasktitle
               td=task.creator
-              td
+              td=moment(task.duedate).format("MM/DD/YYYY")
               td
                 button.button.button-success.complete-task(href='#', data-id=task._id) Done
                 if user.fullname ==task.creator || user.role =='parent'
@@ -56,7 +56,7 @@ block content
               td
                 a(href="/tasks/view/"+task._id)= task.tasktitle
               td=task.creator
-              td
+              td=moment(task.duedate).format("MM/DD/YYYY")
               td
                 button.button.button-success.complete-task(href='#', data-id=task._id) Done
                 a.button.button-edit(href='/tasks/edit/'+task._id) Edit
@@ -77,7 +77,7 @@ block content
               td
                 a(href="/tasks/view/"+task._id)= task.tasktitle
               td=task.creator
-              td
+              td=moment(task.duedate).format("MM/DD/YYYY")
               td
                 button.button.button-success.complete-task(href='#', data-id=task._id) Done
                 a.button.button-edit(href='/tasks/edit/'+task._id) Edit

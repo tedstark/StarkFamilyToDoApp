@@ -95,14 +95,15 @@ app.set('view engine','pug');
   //   });
   // });
 
-  //DOM: Show 'Task List' Page
+  //DOM: Show Home Page
   app.get('/', function(req,res){
     Task.find({}, function(err, tasks){
       if(err){
         console.log(err);
       } else {
         res.render('page_home', {
-          tasks: tasks
+          tasks: tasks,
+          moment:moment
         });
       }
     })

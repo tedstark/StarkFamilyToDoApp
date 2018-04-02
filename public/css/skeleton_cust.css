@@ -1,5 +1,5 @@
 .container {
-  max-width: 800px;}
+  max-width: 1200px;}
 .header {
   margin-top: 6rem;
   text-align: center;}
@@ -153,7 +153,7 @@
 .navbar-item-icon a {
   display:none; }
 
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 625px) {
   .navbar-item-left a {
     display: none;  }
   .navbar-item-right a {

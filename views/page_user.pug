@@ -1,0 +1,24 @@
+extends page_layout
+
+block content
+  if user && user.role=='parent'
+    h1 User Profile Page:
+    div 
+      label.task-header-big.zebra Full Name:
+      span.task-item-big.zebra #{fullname}
+    div
+      label.task-header-big.zebra Username: 
+      span.task-item-small.zebra #{username}
+    div
+      label.task-header-big.zebra Email: 
+      span.task-item-small.zebra #{email}
+    div
+      label.task-body-big.zebra Role: 
+      span.task-body.zebra #{role}
+    br
+    hr
+    if user
+        if user.role =='parent'
+          button.button.button-delete.leftside.delete-task(href='#', data-id=user._id) Del
+          a.button.button-edit.leftside(href='/users/edit/'+user._id) Edit
+    br
