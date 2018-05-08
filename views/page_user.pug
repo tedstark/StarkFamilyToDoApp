@@ -18,7 +18,7 @@ block content
     br
     hr
     if user
-        if user.role =='parent'
+        if user.role =='parent' && user.username!== 'ted'
           button.button.button-delete.leftside.delete-task(href='#', data-id=user._id) Del
           a.button.button-edit.leftside(href='/users/edit/'+user._id) Edit
     br
