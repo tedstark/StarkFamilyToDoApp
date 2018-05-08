@@ -1,4 +1,4 @@
-# StarkFamToDoApp.NodeJS
+# StarkFamilyToDoApp
 ## Personal Development Project for the GCU Full Stack Development w/ Java Programming Bootcamp
 
 This project is hosted online [here](https://tws-app01.herokuapp.com/).
