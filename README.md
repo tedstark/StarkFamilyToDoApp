@@ -53,36 +53,29 @@ The Skeleton CSS framework does not have a responsive navbar out of the box. I h
 ![navbar.jpg](/screenshots/navbar.jpg)
 
 ### **My Tasks Page**
+The 'My Tasks' page lists all tasks, open and closed, assigned to the current logged in user.
 ![mytasks.jpg](/screenshots/mytasks.jpg)
 
-The 'My Tasks' page lists all tasks, open and closed, assigned to the current logged in user.
-
 ### **Child Tasks Pages**
+A Parent user has the menu option to see each Child's tasks on separate pages.
 ![seanstasks.jpg](/screenshots/seanstasks.jpg)
 
-A Parent user has the menu option to see each Child's tasks on separate pages.
-
 ### **All Tasks Page**
+The 'All Tasks' page lists all tasks, open and closed, for all users. 
 ![alltasks.jpg](/screenshots/alltasks.jpg)
 
-The 'All Tasks' page lists all tasks, open and closed, for all users. 
-
 ### **Add a Task**
+Allows any user to add a task for themselves, or if a Parent, for a Child.
 ![addatask.jpg](/screenshots/addatask.jpg)
 
-Allows any user to add a task for themselves, or if a Parent, for a Child.
-
 ### **Edit a Task**
+Allows any user to edit their own tasks themselves, or if a Parent, edit any task for any user..
 ![editatask.jpg](/screenshots/editatask.jpg)
 
-Allows any user to edit their own tasks themselves, or if a Parent, edit any task for any user..
-
 ### **User List**
+Parent users can administer all application users except for my own login.  Any changes for my credentials will need to be done through code.
 ![userlist.jpg](/screenshots/userlist.jpg)
 
-Parent users can administer all application users except for my own login.  Any changes for my credentials will need to be done through code.
-
 ### **Edit a User Page**
-![editauser.jpg](/screenshots/editauser.jpg)
-
 Parent users can edit users through the Edit User page.
+![editauser.jpg](/screenshots/editauser.jpg)
