@@ -6,8 +6,8 @@ This project is hosted online [here](https://tws-app01.herokuapp.com/).
 ## Table of Contents
 
 - [Description](#description)
-- [Technologies](#technologies)
-- [Development Team](#development-team)
+- [Technologies Used](#technologies-used)
+- [Acknowledgements](#acknowledgements)
 - [Application Screenshots](#application-screenshots)
 
 ---
@@ -32,7 +32,7 @@ This project took place in the third month of the bootcamp after 9 weeks of full
 - Atom Editor
 
 ---
-## Credits/Acknowledgement:
+## Acknowledgements:
 
 - The bootcamp instructional staff at [Grand Canyon University](https://www.gcu.edu/degree-programs/java-programming-certificate)
 - [Node.js & Express tutorial series](https://www.youtube.com/playlist?list=PLillGF-RfqbYRpji8t4SxUkMxfowG4Kqp) on YouTube by [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA)
@@ -41,19 +41,16 @@ This project took place in the third month of the bootcamp after 9 weeks of full
 ## Application Screenshots
 
 ### **Login Page**
+The initial landing page allows a family user to enter their username and password and log into the app.
 ![login.jpg](/screenshots/login.jpg)
 
-The initial landing page allows a family user to enter their username and password and log into the app.
-
 ### **Home Page**
+The Home page after login will display a snapshot of tasks based on logged in user's role.  Parents see Child tasks.  And Children see their own tasks.
 ![landingpage.jpg](/screenshots/landingpage.jpg)
 
-The Home page after login will display a snapshot of tasks based on logged in user's role.  Parents see Child tasks.  And Children see their own tasks.
-
 ### **Navbar Menus**
-![navbar.jpg](/screenshots/navbar.jpg)
-
 The Skeleton CSS framework does not have a responsive navbar out of the box. I had to build this from scratch and add it to the application.
+![navbar.jpg](/screenshots/navbar.jpg)
 
 ### **My Tasks Page**
 ![mytasks.jpg](/screenshots/mytasks.jpg)
@@ -84,3 +81,8 @@ Allows any user to edit their own tasks themselves, or if a Parent, edit any tas
 ![userlist.jpg](/screenshots/userlist.jpg)
 
 Parent users can administer all application users except for my own login.  Any changes for my credentials will need to be done through code.
+
+### **Edit a User Page**
+![editauser.jpg](/screenshots/editauser.jpg)
+
+Parent users can edit users through the Edit User page.
