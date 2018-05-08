@@ -21,11 +21,12 @@ This project took place in the third month of the bootcamp after 9 weeks of full
 ---
 ## Technologies Used:
 - [**Node.js**](https://nodejs.org/en/)
-- Express
+  - Express
 - jQuery
 - Pug
 - HTML 5
 - [Skeleton CSS Framework](http://getskeleton.com/)
+  - Custom, responsive navbar
 - MongoDB Atlas
 - [Heroku](https://www.heroku.com/)
 - Atom Editor
@@ -39,4 +40,47 @@ This project took place in the third month of the bootcamp after 9 weeks of full
 ---
 ## Application Screenshots
 
-### **Landing Page**
+### **Login Page**
+![login.jpg](/screenshots/login.jpg)
+
+The initial landing page allows a family user to enter their username and password and log into the app.
+
+### **Home Page**
+![landingpage.jpg](/screenshots/landingpage.jpg)
+
+The Home page after login will display a snapshot of tasks based on logged in user's role.  Parents see Child tasks.  And Children see their own tasks.
+
+### **Navbar Menus**
+![navbar.jpg](/screenshots/navbar.jpg)
+
+The Skeleton CSS framework does not have a responsive navbar out of the box. I had to build this from scratch and add it to the application.
+
+### **My Tasks Page**
+![mytasks.jpg](/screenshots/mytasks.jpg)
+
+The 'My Tasks' page lists all tasks, open and closed, assigned to the current logged in user.
+
+### **Child Tasks Pages**
+![seanstasks.jpg](/screenshots/seanstasks.jpg)
+
+A Parent user has the menu option to see each Child's tasks on separate pages.
+
+### **All Tasks Page**
+![alltasks.jpg](/screenshots/alltasks.jpg)
+
+The 'All Tasks' page lists all tasks, open and closed, for all users. 
+
+### **Add a Task**
+![addatask.jpg](/screenshots/addatask.jpg)
+
+Allows any user to add a task for themselves, or if a Parent, for a Child.
+
+### **Edit a Task**
+![editatask.jpg](/screenshots/editatask.jpg)
+
+Allows any user to edit their own tasks themselves, or if a Parent, edit any task for any user..
+
+### **User List**
+![userlist.jpg](/screenshots/userlist.jpg)
+
+Parent users can administer all application users except for my own login.  Any changes for my credentials will need to be done through code.
