@@ -139,7 +139,7 @@ let User = require('../models/user');
                 return;
               } else {
                   req.flash('success', 'User '+user.username+' Updated!');
-                  res.redirect('/users/view/:id');
+                  res.redirect('/users/view/'+req.params.id);
                 }
             });
           }

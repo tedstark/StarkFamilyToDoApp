@@ -20,5 +20,6 @@ block content
               td=user.email
               td=user.role
               td
-                a.button.button-edit(href="/users/edit/"+user._id) Edit
-                button.button.button-delete.delete-user(href='#', data-id=user._id) Del
+                if user.username!== 'ted'
+                    a.button.button-edit(href="/users/edit/"+user._id) Edit
+                    button.button.button-delete.delete-user(href='#', data-id=user._id) Del
