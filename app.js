@@ -7,7 +7,7 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const passport = require('passport');
 const moment = require('moment-timezone');
-require('dotenv').config();
+require('dotenv').config(); //dotenv
 
 //For Timestamp messages in console
 require('console-stamp')(console, 'HH:MM:ss');
@@ -15,7 +15,7 @@ require('console-stamp')(console, 'HH:MM:ss');
 //Initialize statements
 const app = express();
 let Task = require('./models/task');
-let env = process.env;
+let env = process.env; //dotenv
 let db = mongoose.connection;
 
 //Set Public folder path
@@ -119,3 +119,5 @@ app.set('view engine','pug');
 app.listen((process.env.PORT || 3000), function(){
   console.log('Server started on port 3000 (localhost) or '+process.env.PORT+' (heroku).');
 });
+
+console.log(env.DB_USER);
