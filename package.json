@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Ted Stark",
   "license": "ISC",
@@ -26,7 +26,7 @@
     "moment-timezone": "^0.5.21",
     "mongoose": "^5.3.3",
     "nodemon": "^1.18.4",
-    "npm": "^6.11.2",
+    "npm": "^6.13.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "popper": "^1.0.1",
